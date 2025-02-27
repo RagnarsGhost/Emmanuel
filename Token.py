@@ -10,6 +10,16 @@ class Types(Enum):
     DIVIDE = "DIVIDE"
     LPAREN = "LPAREN"
     RPAREN = "RPAREN"
+    LTHAN = "LTHAN"
+    GTHAN = "GTHAN"
+    LTHANE = "LTHANE"
+    GTHANE = "GTHANE"
+    NOT = "NOT"
+    AND = "AND"
+    OR = "OR"
+    EQ = "EQ"
+    NOTEQ = "NOTEQ"
+    BOOLEAN ="BOOLEAN"
     EOF = "EOF"
 
 class Token:

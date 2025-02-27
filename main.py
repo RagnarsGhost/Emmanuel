@@ -43,12 +43,21 @@ class UnaryOp:
 
 
 class Num:
-    def __init__(self, value):
-        #self.token = token
-        self.value = value
+    def __init__(self, token):
+        self.token = token
+        self.value = token.value
 
     def __repr__(self):
         return f"Num({self.value})"
+
+class Boolean:
+    def __init__(self, token):
+        self.token = token
+        self.value = token.value
+
+    def __repr__(self):
+        return f"Boolean({self.value})"
+
 
 
 class Parser:
@@ -88,12 +97,21 @@ class Parser:
             node = self.factor()  # Recursively parse the factor after unary minus
             return UnaryOp(op=token, expr=node)
 
+        if token.type == Types.NOT:
+            self.advance()
+            node = self.factor()
+            return UnaryOp(op=token, expr=node)
+
+        if token.type == Types.BOOLEAN:
+            self.advance()
+            return Boolean(token)
+
         if token.type == Types.INTEGER or token.type == Types.FLOAT:
             self.advance()
-            return Num(token.value)  # Return a Num node
+            return Num(token)  # Return a Num node
         elif token.type == Types.LPAREN:
             self.advance()
-            node = self.expr()  # Recursively parse the expression inside parentheses
+            node = self.logical_or()
             if self.current_token.type != Types.RPAREN:
                 raise Exception("Expected ')'")
             self.advance()
@@ -101,14 +119,46 @@ class Parser:
         else:
             raise Exception("Invalid syntax")
 
+    def logical_or(self):
+        node = self.logical_and()
+        while self.current_token.type == Types.OR:
+            op = self.current_token
+            self.advance()
+            right = self.logical_and()
+            node = BinOp(left=node, op=op, right=right)
+        return node
+
+    def logical_and(self):
+        node = self.equality()
+        while self.current_token.type == Types.AND:
+            op = self.current_token
+            self.advance()
+            right = self.equality()
+            node = BinOp(left=node, op=op, right=right)
+        return node
+
+    def equality(self):
+        node = self.comparison()
+        while self.current_token.type in (Types.EQ, Types.NOTEQ):
+            op = self.current_token
+            self.advance()
+            right = self.comparison()
+            node = BinOp(left=node, op=op, right=right)
+        return node
+
+    def comparison(self):
+        node = self.expr()
+        while self.current_token.type in (Types.LTHAN, Types.GTHAN, Types.LTHANE, Types.GTHANE):
+            op = self.current_token
+            self.advance()
+            right = self.expr()
+            node = BinOp(left=node, op=op, right=right)
+        return node
+
+
     def parse(self):
-        return self.expr()  # Start parsing from the 'expr' method
+        return self.logical_or()
 
-
-
-# -----------------------
-# INTERPRETER (AST EVALUATOR)
-# -----------------------
 
 class Interpreter:
     def __init__(self, parser):
@@ -120,15 +170,13 @@ class Interpreter:
         """
         method_name = 'visit_' + type(node).__name__  # 'visit_BinOp'
         visitor = getattr(self, method_name, self.generic_visit)
-        return visitor(node)  # This should pass the node correctly
-
+        return visitor(node)
 
 
     def generic_visit(self, node):
         raise Exception(f"No visit_{type(node).__name__} method")
 
     def visit_BinOp(self, node):
-    # Ensure that 'node' has left, op, and right attributes
      if node.op.type == Types.PLUS:
         return self.visit(node.left) + self.visit(node.right)
      elif node.op.type == Types.MINUS:
@@ -137,14 +185,40 @@ class Interpreter:
         return self.visit(node.left) * self.visit(node.right)
      elif node.op.type == Types.DIVIDE:
         return self.visit(node.left) / self.visit(node.right)
+     elif node.op.type == Types.LTHAN:
+         return self.visit(node.left) < self.visit(node.right)
+     elif node.op.type == Types.GTHAN:
+         return self.visit(node.left) > self.visit(node.right)
+     elif node.op.type == Types.LTHANE:
+         return self.visit(node.left) <= self.visit(node.right)
+     elif node.op.type == Types.GTHANE:
+         return self.visit(node.left) >= self.visit(node.right)
+     elif node.op.type == Types.EQ:
+         return self.visit(node.left) == self.visit(node.right)
+     elif node.op.type == Types.NOTEQ:
+         return self.visit(node.left) != self.visit(node.right)
+     elif node.op.type == Types.AND:
+         return self.visit(node.left) and self.visit(node.right)
+     elif node.op.type == Types.OR:
+         return self.visit(node.left) or self.visit(node.right)
+     else:
+         raise Exception(f"unknown binary operator")
+
 
     def visit_UnaryOp(self, node):
         if node.op.type == Types.PLUS:
             return +self.visit(node.expr)
         elif node.op.type == Types.MINUS:
             return -self.visit(node.expr)
+        elif node.op.type == Types.NOT:
+            return not self.visit(node.expr)
+        else:
+            raise Exception(f"unknown unary operator")
 
     def visit_Num(self, node):
+        return node.value
+
+    def visit_Boolean(self, node):
         return node.value
 
     def interpret(self):
@@ -164,16 +238,10 @@ else:
     read_lexer_from_file("C:\\Users\\ldi\\Language Design\\test.src")
 """
 if __name__ == "__main__":
-    # Use the command-line argument if provided, otherwise use a default file path.
     if len(sys.argv) > 1:
         source_file = sys.argv[1]
     else:
         source_file = "C:\\Users\\ldi\\Language Design\\test.src"  # Default file path
-
-    # Optionally, if you want to see the token stream for debugging, uncomment this line:
-    # read_lexer_from_file(source_file)
-
-    # Now process the file to evaluate the arithmetic expressions.
     try:
         with open(source_file, "r") as file:
             lines = file.readlines()
