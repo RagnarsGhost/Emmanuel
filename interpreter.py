@@ -1,6 +1,15 @@
 from Token import Types
 from ast import BinOp, UnaryOp, Num, Boolean, String
 
+class My_RuntimeError(Exception):
+     def __init__(self, message):
+         super().__init__(message)
+         self.message = message
+
+     def __str__(self):
+         return f"MyRuntimeError: {self.message}"
+
+
 class Interpreter:
     def __init__(self, parser):
         self.parser = parser
