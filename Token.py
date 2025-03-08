@@ -1,4 +1,5 @@
 from enum import Enum
+from typing import Dict, Any, Tuple
 
 class Types(Enum):
     NUMBER = "NUMBER"
@@ -22,6 +23,58 @@ class Types(Enum):
     BOOLEAN ="BOOLEAN"
     STRING = "STRING"
     EOF = "EOF"
+
+    #keywords
+    TRUE = "TRUE"
+    FALSE = "FALSE"
+    ELSE ="else"
+    WHILE = "while"
+    IF = "if"
+    CLASS = "class"
+    THIS = "this"
+    NULL = "null"
+    FUNCTION = "function"
+    RETURN = "return"
+    FOR = "for"
+    SUPER ="super"
+    CONST = "const"
+    LET = "let"
+    VAR = "var"
+    PRINT = "print"
+
+    # String starters
+    SINGLE_QUOTE = "'"
+    DOUBLE_QUOTE = '"'
+
+    # New line
+    NEW_LINE = '\n'
+
+    # Space
+    TAB = '\t'
+    SPACE = ' '
+
+    # String terminator
+    NULL_CHARACTER = '\0'
+
+    # End-user identifiers
+    IDENTIFIER = '_identifier'
+
+_keywords: Tuple[str, ...] = (
+    "TRUE", "FALSE", "null", "AND", "OR", "if", "else", "function", "return",
+    "for", "class", "super", "this", "const", "let", "while", "var", "print"
+)
+
+KEYWORDS: Dict[str, Types] = {key: Types(key) for key in _keywords}
+
+SINGLE_CHARS: Tuple[str, ...] = (
+    '(', ')', '{', '}', ',', '.', '-', '+', ';', '*',
+)
+
+ONE_OR_MORE_CHARS: Tuple[str, ...] = ('!', '!=', '=', '==', '>', '>=', '<', '<=')
+
+WHITESPACE: Tuple[str, ...] = (' ', '\r', '\t')
+
+STRING_STARTERS: Tuple[str, ...] = ('"', "'")
 
 class Token:
     def __init__(self, type, value, supertype=None, precedence=None):

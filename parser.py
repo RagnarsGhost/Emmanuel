@@ -1,5 +1,5 @@
 from Token import Types
-from ast import BinOp, UnaryOp, Num, Boolean, String
+from ast_nodes import BinOp, UnaryOp, Num, Boolean, String
 
 class Parser:
     def __init__(self, lexer):

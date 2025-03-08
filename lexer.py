@@ -1,5 +1,7 @@
+from astropy.io.votable.validator.result import Result
+
 from Token import Token
-from Token import Types
+from Token import Types, _keywords
 
 class Lexer:
     def __init__(self, text):
@@ -49,13 +51,14 @@ class Lexer:
         elif dot_count == 1:
             return Token(Types.FLOAT, float(result))
 
-    def _identifier(self):
+    def _identifier(self) -> str:
         """Collect a sequence of alphabetic characters into an identifier."""
         result = ''
-        while self.current_char is not None and self.current_char.isalpha():
+        while self.current_char is not None and (self.current_char.isalpha() or self.current_char == '_'):
             result += self.current_char
             self.advance()
         return result
+
 
     def get_string(self):
         self.advance()
