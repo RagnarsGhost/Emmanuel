@@ -1,5 +1,5 @@
 from Token import Types
-from ast import BinOp, UnaryOp, Num, Boolean
+from ast import BinOp, UnaryOp, Num, Boolean, String
 
 class Interpreter:
     def __init__(self, parser):
@@ -19,7 +19,12 @@ class Interpreter:
 
     def visit_BinOp(self, node):
         if node.op.type == Types.PLUS:
-            return self.visit(node.left) + self.visit(node.right)
+            if isinstance(self.visit(node.left), str) and isinstance(self.visit(node.right), str):
+                return self.visit(node.left) + self.visit(node.right)
+            if isinstance(self.visit(node.left), (int, float)) and isinstance(self.visit(node.right), (int, float)):
+                return self.visit(node.left) + self.visit(node.right)
+            else:
+                raise Exception("invalid operands for concatenation")
         elif node.op.type == Types.MINUS:
             return self.visit(node.left) - self.visit(node.right)
         elif node.op.type == Types.MULTIPLY:
@@ -60,6 +65,9 @@ class Interpreter:
         return node.value
 
     def visit_Boolean(self, node):
+        return node.value
+
+    def visit_String(self, node):
         return node.value
 
     def interpret(self):

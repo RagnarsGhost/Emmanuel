@@ -20,6 +20,7 @@ class Types(Enum):
     EQ = "EQ"
     NOTEQ = "NOTEQ"
     BOOLEAN ="BOOLEAN"
+    STRING = "STRING"
     EOF = "EOF"
 
 class Token:

@@ -14,3 +14,8 @@ true and true
 false and true
 (0 < 1) or false
 false or false
+
+"hello" + " " + "world"
+"foo" + "bar" == "foobar"
+"10 corgis" != "10" + "corgis"
+

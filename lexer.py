@@ -57,6 +57,29 @@ class Lexer:
             self.advance()
         return result
 
+    def get_string(self):
+        self.advance()
+        result = ""
+        while self.current_char is not None and self.current_char != '"':
+            if self.current_char == '\\':
+                self.advance()
+                if self.current_char == 'n':
+                    result += '\n'
+                elif self.current_char == 't':
+                    result += '\t'
+                elif self.current_char == '"':
+                    result += '"'
+                else:
+                    raise Exception("invalid escape sequence")
+            else:
+                result += self.current_char
+            self.advance()
+        if self.current_char != '"':
+            raise Exception("Unterminated string literal")
+        self.advance()
+        return Token(Types.STRING, result)
+
+
     def get_next_token(self):
         """Lexical analyzer that breaks the input into tokens."""
         while self.current_char is not None:
@@ -66,6 +89,9 @@ class Lexer:
 
             if self.current_char.isdigit() or self.current_char == '.':
                 return self.number()
+
+            if self.current_char == '"':
+                return self.get_string()
 
             if self.current_char.isalpha():
                 id_str = self._identifier()

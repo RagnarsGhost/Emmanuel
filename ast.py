@@ -29,5 +29,10 @@ class Boolean:
         self.token = token
         self.value = token.value
 
+class String:
+    def __init__(self, token):
+        self.token = token
+        self.value = token.value
+
     def __repr__(self):
-        return f"Boolean({self.value})"
+        return f"String({self.value})"
