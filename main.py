@@ -25,14 +25,7 @@ def read_lexer_from_file(file_path):
                 break
         print("-" * 30)
 
-"""
-if read_lexer_from_file == "__main__":
-    if len(sys.argv) > 1:
-        source_file = sys.argv[1]
-else:
-    source_file = "C:\\Users\\ldi\\Language Design\\test.src"  # Default file path
-    read_lexer_from_file("C:\\Users\\ldi\\Language Design\\test.src")
-"""
+
 if __name__ == "__main__":
     if len(sys.argv) > 1:
         source_file = sys.argv[1]
