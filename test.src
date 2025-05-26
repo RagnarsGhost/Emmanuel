@@ -18,4 +18,40 @@ false or false
 "hello" + " " + "world"
 "foo" + "bar" == "foobar"
 "10 corgis" != "10" + "corgis"
+1 + "0"
+
+false == "false"
+"line1\nline2"
+"Hello " + "world" + "!"
+"10" + " dogs"
+"10" == "10"
+1000/20
+
+quickMaths = 10
+quickMaths = quickMaths + 2
+print quickMaths
+
+
+floatTest = 1.0
+floatTest = floatTest + 5
+print floatTest
+
+stringCatTest = "10 corgis"
+stringCatTest = stringCatTest + 5 + " more corgis"
+print stringCatTest
+
+errorTest = 5
+errorTest = errorTest + "insert string here"
+print errorTest
+
+
+
+
+
+
+
+
+
+
+
 

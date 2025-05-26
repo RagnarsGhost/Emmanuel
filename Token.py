@@ -19,6 +19,7 @@ class Types(Enum):
     AND = "AND"
     OR = "OR"
     EQ = "EQ"
+    ASSIGN = "ASSIGN"
     NOTEQ = "NOTEQ"
     BOOLEAN ="BOOLEAN"
     STRING = "STRING"
@@ -41,6 +42,7 @@ class Types(Enum):
     LET = "let"
     VAR = "var"
     PRINT = "print"
+    IDENT = "IDENT"
 
     # String starters
     SINGLE_QUOTE = "'"
@@ -56,8 +58,14 @@ class Types(Enum):
     # String terminator
     NULL_CHARACTER = '\0'
 
+    # Backslash
+    BACKSLASH = '\\'
+
+    #Escaped quotes
+    ESCAPED_QUOTES = '\"', '\''
+
     # End-user identifiers
-    IDENTIFIER = '_identifier'
+    IDENTIFIER = 'IDENTIFIER'
 
 _keywords: Tuple[str, ...] = (
     "TRUE", "FALSE", "null", "AND", "OR", "if", "else", "function", "return",
@@ -70,7 +78,7 @@ SINGLE_CHARS: Tuple[str, ...] = (
     '(', ')', '{', '}', ',', '.', '-', '+', ';', '*',
 )
 
-ONE_OR_MORE_CHARS: Tuple[str, ...] = ('!', '!=', '=', '==', '>', '>=', '<', '<=')
+ONE_OR_MORE_CHARS: Tuple[str, ...] = ('!', '!=', '==', '>', '>=', '<', '<=')
 
 WHITESPACE: Tuple[str, ...] = (' ', '\r', '\t')
 
