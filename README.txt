@@ -5,7 +5,7 @@ This is a custom language interpreter written in Python.
 INSTRUCTIONS:
 
 1. Write your program in a `.txt` file using the custom language syntax.
-   Example program (saved as `test.src` and `program.src`):
+   Example program (saved as `test.src` , `program.src` , `nested.src`):
 
 Language Syntax:
 ----------------
@@ -33,11 +33,22 @@ while (x > 0) {
   x = x - 1
 }
 
+- Nested while loops:
+row = 1
+while (row <= 3) {
+    col = 1
+    while (col <= 3) {
+        print "" + row + " x " + col + " = " + (row * col)
+        col = col + 1
+    }
+    row = row + 1
+}
+
 
 2. To run this file using the interpreter:
-    In IntelliJ: Right-click `main.py`, edit run configuration to pass `test.src` or the `program.src` files as an argument. This will require using the already hardcoded file path in the main.py file which would have to be changed just in case you decide to run another program file to test the program
+    In IntelliJ: Right-click `main.py`, edit run configuration to pass `test.src` , `program.src` , `nested.src` files as an argument. This will require using the already hardcoded file path in the main.py file which would have to be changed just in case you decide to run another program file to test the program
     Or, use terminal:
-     `python3 main.py test.src, program.src` which can be used to run a single file or multiple files
+     `python3 main.py test.src, program.src, nested.src` which can be used to run a single file or multiple files
 
 3. The interpreter supports:
 - Variable declarations

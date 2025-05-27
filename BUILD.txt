@@ -18,7 +18,7 @@ BUILD INSTRUCTIONS
 4. To run from terminal (if you prefer):
    a. Open a terminal inside the project folder.
    b. Run: `python3 main.py test.src`
-   c. you can also run multiple file: python3 main.py test.src, program.src
+   c. you can also run multiple file: python3 main.py test.src, program.src, nested.src
 
 NOTE:
 - All dependencies are part of Python standard library, no additional packages required.
@@ -32,7 +32,7 @@ File Descriptions:
 `interpreter.py` : Evaluates AST and executes code.
 `token.py` : holds the Token types and token class.
 `ast_nodes.py` : AST node definitions.
-`test.src` and `program.src`  : holds the different language syntax needed to test the program
+`test.src` , `program.src` , `nested.src`  : holds the different language syntax needed to test the program
 `data.py` : holds the class and functions for the variables
 
 
