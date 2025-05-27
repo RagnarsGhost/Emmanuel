@@ -36,3 +36,7 @@ class Assign(AST):
 class Print(AST):
     def __init__(self, expr):
         self.expr = expr
+
+class Del(AST):
+    def __init__(self, name_token):
+        self.name = name_token.value

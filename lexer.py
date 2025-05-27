@@ -133,7 +133,8 @@ class Lexer:
 
                 if id_str == "print":
                     return Token(Types.PRINT, "print")
-
+                if id_str == "del":
+                    return  Token(Types.DEL, "del")
                 if id_str == "true":
                     return Token(Types.BOOLEAN, True)
                 elif id_str  == "false":

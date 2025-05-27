@@ -23,6 +23,7 @@ class Types(Enum):
     NOTEQ = "NOTEQ"
     BOOLEAN ="BOOLEAN"
     STRING = "STRING"
+    DEL = "DEL"
     EOF = "EOF"
 
     #keywords

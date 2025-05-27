@@ -27,6 +27,7 @@ false == "false"
 "10" == "10"
 1000/20
 
+
 quickMaths = 10
 quickMaths = quickMaths + 2
 print quickMaths
@@ -43,6 +44,9 @@ print stringCatTest
 errorTest = 5
 errorTest = errorTest + "insert string here"
 print errorTest
+
+quickMaths + 1
+
 
 
 

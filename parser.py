@@ -32,6 +32,12 @@ class Parser:
             expr = self.expr()
             return Print(expr)
 
+        elif self.current_token.type == Types.DEL:
+            self.eat(Types.DEL)
+            var_token = self.current_token
+            self.eat(Types.IDENTIFIER)
+            return Del(var_token)
+
         elif self.current_token.type == Types.IDENTIFIER:
             var_token = self.current_token
             next_token = self.lexer.peek_next_token()

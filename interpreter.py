@@ -43,6 +43,12 @@ class Interpreter:
             return self.global_env[name]
         raise My_RuntimeError(f"Undefined variable '{name}'")
 
+    def visit_Del(self, node):
+        if node.name in self.global_env:
+            del self.global_env[node.name]
+        else:
+            raise My_RuntimeError(f"Cannot delete undefined variable '{node.name}'")
+
     def visit_Print(self, node):
         value = self.visit(node.expr)
         print(value)
