@@ -1,0 +1,14 @@
+name = input("What is your name? ")
+
+if (name == "Alice") {
+    print "Welcome, Alice!"
+} else {
+    print "Access denied."
+}
+
+count = 3
+
+while (count > 0) {
+    print "Countdown: " + count
+    count = count - 1
+}
