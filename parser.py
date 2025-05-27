@@ -24,6 +24,18 @@ class Parser:
             stmt = self.statement()
             if stmt:
                 statements.append(stmt)
+            else:
+                self.advance()
+        return statements
+
+    def block(self):
+        self.eat(Types.LBRACE)
+        statements =[]
+        while self.current_token.type != Types.RBRACE:
+           stmt = self.statement()
+           if stmt:
+               statements.append(stmt)
+        self.eat(Types.RBRACE)
         return statements
 
     def statement(self):
@@ -37,6 +49,15 @@ class Parser:
             var_token = self.current_token
             self.eat(Types.IDENTIFIER)
             return Del(var_token)
+
+        elif self.current_token.type == Types.IF:
+            return self.if_statement()
+
+        elif self.current_token.type == Types.WHILE:
+            return self.while_statement()
+
+        elif self.current_token.type == Types.LBRACE:
+            return self.block()
 
         elif self.current_token.type == Types.IDENTIFIER:
             var_token = self.current_token
@@ -127,6 +148,13 @@ class Parser:
             self.advance()
             return String(token.value)
 
+        if token.type == Types.INPUT:
+            self.advance()
+            self.eat(Types.LPAREN)
+            prompt_expr = self.expr()
+            self.eat(Types.RPAREN)
+            return Input(prompt_expr)
+
         if token.type == Types.IDENTIFIER:
             self.advance()
             return Var(token)
@@ -137,4 +165,25 @@ class Parser:
             self.eat(Types.RPAREN)
             return node
 
+
         self.error("Unexpected token in expression")
+
+    def if_statement(self):
+        self.eat(Types.IF)
+        self.eat(Types.LPAREN)
+        condition = self.expr()
+        self.eat(Types.RPAREN)
+        then_branch = self.block()
+        else_branch = None
+        if self.current_token.type == Types.ELSE:
+            self.eat(Types.ELSE)
+            else_branch = self.block()
+        return If(condition, then_branch, else_branch)
+
+    def while_statement(self):
+        self.eat(Types.WHILE)
+        self.eat(Types.LPAREN)
+        condition = self.expr()
+        self.eat(Types.RPAREN)
+        body = self.block()
+        return While(condition, body)

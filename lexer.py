@@ -134,7 +134,15 @@ class Lexer:
                 if id_str == "print":
                     return Token(Types.PRINT, "print")
                 if id_str == "del":
-                    return  Token(Types.DEL, "del")
+                    return Token(Types.DEL, "del")
+                if id_str == "if":
+                    return Token(Types.IF, "if")
+                elif id_str == "else":
+                    return Token(Types.ELSE, "else")
+                elif id_str == "while":
+                    return Token(Types.WHILE, "while")
+                elif id_str == "input":
+                    return Token(Types.INPUT, "input")
                 if id_str == "true":
                     return Token(Types.BOOLEAN, True)
                 elif id_str  == "false":
@@ -207,6 +215,14 @@ class Lexer:
             if self.current_char == ')':
                 self.advance()
                 return Token(Types.RPAREN, ')')
+
+            if self.current_char == '{':
+                self.advance()
+                return Token(Types.LBRACE, '{')
+
+            if self.current_char == '}':
+                self.advance()
+                return Token(Types.RBRACE, '}')
 
             self.error()
 

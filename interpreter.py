@@ -1,6 +1,7 @@
 from Token import Types
 from data import Data
-from ast_nodes import BinOp, UnaryOp, Number, Boolean, String, Var, Print, Assign
+from ast_nodes import BinOp, UnaryOp, Number, Boolean, String, Var, Print, Assign, Input
+
 
 class My_RuntimeError(RuntimeError):
     def __init__(self, message):
@@ -35,7 +36,9 @@ class Interpreter:
     def visit_Assign(self, node):
         value = self.visit(node.expr)
         self.global_env[node.name] = value
-        return value
+        if isinstance(value, Input):
+            value = self.visit(value)
+        return f"{node.name} = {value}"
 
     def visit_Var(self, node):
         name = node.name
@@ -139,3 +142,20 @@ class Interpreter:
         for node in node_list:
             result = self.visit(node)
         return result
+
+    def visit_If(self, node):
+        if self.visit(node.condition):
+            for stmt in node.then_branch:
+                self.visit(stmt)
+        elif node.else_branch:
+            for stmt in node.else_branch:
+                self.visit(stmt)
+
+    def visit_While(self, node):
+        while self.visit(node.condition):
+            for stmt in node.body:
+                self.visit(stmt)
+
+    def visit_Input(self, node):
+        prompt = self.visit(node.prompt_expr)
+        return input(str(prompt))

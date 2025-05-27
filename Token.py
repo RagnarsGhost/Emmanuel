@@ -29,9 +29,12 @@ class Types(Enum):
     #keywords
     TRUE = "TRUE"
     FALSE = "FALSE"
-    ELSE ="else"
-    WHILE = "while"
-    IF = "if"
+    ELSE ="ELSE"
+    WHILE = "WHILE"
+    IF = "IF"
+    INPUT = "INPUT"
+    LBRACE = "LBRACE"
+    RBRACE = "RBRACE"
     CLASS = "class"
     THIS = "this"
     NULL = "null"
@@ -69,8 +72,8 @@ class Types(Enum):
     IDENTIFIER = 'IDENTIFIER'
 
 _keywords: Tuple[str, ...] = (
-    "TRUE", "FALSE", "null", "AND", "OR", "if", "else", "function", "return",
-    "for", "class", "super", "this", "const", "let", "while", "var", "print"
+    "TRUE", "FALSE", "null", "AND", "OR", "IF", "ELSE", "function", "return",
+    "for", "class", "super", "this", "const", "let", "WHILE", "var", "print", "INPUT"
 )
 
 KEYWORDS: Dict[str, Types] = {key: Types(key) for key in _keywords}

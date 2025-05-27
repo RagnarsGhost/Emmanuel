@@ -40,3 +40,19 @@ class Print(AST):
 class Del(AST):
     def __init__(self, name_token):
         self.name = name_token.value
+
+class If(AST):
+    def __init__(self, condition, then_branch, else_branch=None):
+        self.condition = condition
+        self.then_branch = then_branch
+        self.else_branch = else_branch
+
+class While(AST):
+    def __init__(self, condition, body):
+        self.condition = condition
+        self.body = body
+
+class Input(AST):
+    def __init__(self, prompt_expr):
+        self.prompt_expr = prompt_expr
+
