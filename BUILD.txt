@@ -1,0 +1,38 @@
+BUILD INSTRUCTIONS
+
+1. This project was developed using IntelliJ IDEA with the Python plugin (PyCharm features).
+
+2. To build and run the interpreter from source:
+
+   a. Open IntelliJ IDEA.
+   b. Go to "File" > "Open..." and select the root folder of this project.
+   c. Ensure Python is configured as the interpreter:
+      - Go to "File" > "Settings" > "Project: [your_project]" > "Python Interpreter"
+      - Choose a valid interpreter for example Python 3.12
+
+3. To run the interpreter:
+   a. Right-click on `main.py` (or the script that runs your interpreter)
+   b. Click “Run 'main'”. This will require using the already hardcoded file path in the main.py file which would have to be changed just in case you decide to run another program file to test the program
+
+
+4. To run from terminal (if you prefer):
+   a. Open a terminal inside the project folder.
+   b. Run: `python3 main.py test.src`
+   c. you can also run multiple file: python3 main.py test.src, program.src
+
+NOTE:
+- All dependencies are part of Python standard library, no additional packages required.
+- `main.py` is the entry point to the interpreter.
+
+
+File Descriptions:
+`main.py` : Entry point for the interpreter.
+`lexer.py`  : Tokenizer module.
+`parser.py` : Parses tokens into an abstract syntax tree (AST).
+`interpreter.py` : Evaluates AST and executes code.
+`token.py` : holds the Token types and token class.
+`ast_nodes.py` : AST node definitions.
+`test.src` and `program.src`  : holds the different language syntax needed to test the program
+`data.py` : holds the class and functions for the variables
+
+
